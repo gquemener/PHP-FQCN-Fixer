@@ -11,7 +11,14 @@ final class Basic implements FileReader, FileWriter
 {
     public function read(string $path): string
     {
-        return file_get_contents($path);
+        if (false === $content = file_get_contents($path)) {
+            throw new \RuntimeException(sprintf(
+                'Cannot read file "%s".',
+                $path
+            ));
+        }
+
+        return $content;
     }
 
     public function write(string $path, string $content): void
