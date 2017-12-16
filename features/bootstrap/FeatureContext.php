@@ -63,7 +63,11 @@ class FeatureContext implements Context
         if (0 !== $exitCode = $this->application->run($input, $output)) {
             echo $output->fetch();
 
-            throw new \RuntimeException(sprintf('Command return errored exit code %d', $exitCode));
+            throw new \RuntimeException(sprintf(
+                'Command "%s" return errored exit code %d',
+                implode(' ', $table->getRowsHash()),
+                $exitCode
+            ));
         }
     }
 
