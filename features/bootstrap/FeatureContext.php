@@ -9,6 +9,8 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Assert\Assertion;
 use Assert\Assert;
 use PhpFQCNFixer\Infrastructure\Console\Application;
+use PhpFQCNFixer\Infrastructure\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Defines application features from the specific context.
@@ -38,7 +40,9 @@ class FeatureContext implements Context
 
         mkdir($tempFile);
         $this->projectDir = $tempFile;
-        $this->application = new Application('behat-dev');
+        $this->application = new Application(
+            (new ContainerBuilder())->build(new Container())
+        );
         $this->application->setAutoExit(false);
     }
 
@@ -57,7 +61,11 @@ class FeatureContext implements Context
      */
     public function iRunTheFixerWithTheFollowingArguments(TableNode $table)
     {
-        $input = new ArrayInput($table->getRowsHash());
+        $arguments = $table->getRowsHash();
+        if (isset($arguments['path'])) {
+            $arguments['path'] = $this->getPrefixedPath($arguments['path']);
+        }
+        $input = new ArrayInput($arguments);
         $output = new BufferedOutput();
 
         if (0 !== $exitCode = $this->application->run($input, $output)) {

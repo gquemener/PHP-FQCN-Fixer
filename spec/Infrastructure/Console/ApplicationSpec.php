@@ -5,12 +5,15 @@ namespace spec\PhpFQCNFixer\Infrastructure\Console;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Console\Application;
+use Psr\Container\ContainerInterface;
+use Prooph\ServiceBus\CommandBus;
 
 class ApplicationSpec extends ObjectBehavior
 {
-    function let()
+    function let(ContainerInterface $container, CommandBus $commandBus)
     {
-        $this->beConstructedWith('1.0.0-dev');
+        $this->beConstructedWith($container);
+        $container->get(CommandBus::class)->willReturn($commandBus);
     }
 
     function it_is_a_symfony_application()

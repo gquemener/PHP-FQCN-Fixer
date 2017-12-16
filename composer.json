@@ -14,6 +14,7 @@
         }
     },
     "require": {
+        "prooph/service-bus": "^6.1",
         "symfony/console": "^4.0"
     },
     "require-dev": {

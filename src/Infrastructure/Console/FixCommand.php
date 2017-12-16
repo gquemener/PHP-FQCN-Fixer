@@ -8,9 +8,20 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use PhpFQCNFixer\Model\Fixer\Command\FixPath;
+use Prooph\ServiceBus\CommandBus;
 
 final class FixCommand extends Command
 {
+    private $commandBus;
+
+    public function __construct(CommandBus $commandBus)
+    {
+        parent::__construct();
+
+        $this->commandBus = $commandBus;
+    }
+
     protected function configure()
     {
         $this
@@ -21,5 +32,8 @@ final class FixCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->commandBus->dispatch(new FixPath([
+            'path' => $input->getArgument('path'),
+        ]));
     }
 }

@@ -7,14 +7,19 @@ namespace PhpFQCNFixer\Infrastructure\Console;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputArgument;
+use Psr\Container\ContainerInterface;
+use Prooph\ServiceBus\CommandBus;
 
 final class Application extends BaseApplication
 {
-    public function __construct($version)
-    {
-        parent::__construct('PHP FQCN Fixer', $version);
+    const VERSION = '1.0.0-dev';
 
-        $this->add(new FixCommand());
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct('PHP FQCN Fixer', self::VERSION);
+
+        $this->add(new FixCommand($container->get(CommandBus::class)));
+
         $this->setDefinition(new InputDefinition([
             new InputArgument('command_name', InputArgument::REQUIRED),
         ]));
