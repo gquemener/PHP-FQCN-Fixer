@@ -28,9 +28,14 @@ class FeatureContext implements Context
     public function __construct()
     {
         $tempFile = tempnam(sys_get_temp_dir(), '');
+        if (!is_string($tempFile)) {
+            throw new \RuntimeException('Unable to generate unique filename');
+        }
+
         if (file_exists($tempFile)) {
             unlink($tempFile);
         }
+
         mkdir($tempFile);
         $this->projectDir = $tempFile;
         $this->application = new Application('behat-dev');
@@ -74,6 +79,6 @@ class FeatureContext implements Context
 
     private function getPrefixedPath($filename)
     {
-        return $this->projectDir . '/' . $filename;
+        return sprintf('%s/%s', $this->projectDir, $filename);
     }
 }
