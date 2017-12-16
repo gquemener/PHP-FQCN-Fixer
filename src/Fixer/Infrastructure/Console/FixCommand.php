@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpFQCNFixer\Console;
+namespace PhpFQCNFixer\Fixer\Infrastructure\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

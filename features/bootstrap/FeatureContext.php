@@ -4,11 +4,11 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-use PhpFQCNFixer\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Assert\Assertion;
 use Assert\Assert;
+use PhpFQCNFixer\Fixer\Infrastructure\Console\Application;
 
 /**
  * Defines application features from the specific context.
