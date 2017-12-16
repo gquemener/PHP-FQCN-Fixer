@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\PhpFQCNFixer\Fixer\Infrastructure\Console;
+namespace spec\PhpFQCNFixer\Infrastructure\Console;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

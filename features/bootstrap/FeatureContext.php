@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Assert\Assertion;
 use Assert\Assert;
-use PhpFQCNFixer\Fixer\Infrastructure\Console\Application;
+use PhpFQCNFixer\Infrastructure\Console\Application;
 
 /**
  * Defines application features from the specific context.

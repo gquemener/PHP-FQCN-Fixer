@@ -1,6 +1,8 @@
 <?php
 
-namespace PhpFQCNFixer\Fixer\Infrastructure\Console;
+declare(strict_types = 1);
+
+namespace PhpFQCNFixer\Infrastructure\Console;
 
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputDefinition;
