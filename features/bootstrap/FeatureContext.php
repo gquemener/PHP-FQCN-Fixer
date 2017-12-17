@@ -52,7 +52,10 @@ class FeatureContext implements Context
     public function theFollowingFile($filename, PyStringNode $data)
     {
         $filename = $this->getPrefixedPath($filename);
-        mkdir(dirname($filename), 0777, true);
+        $directory = dirname($filename);
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
         file_put_contents($filename, (string) $data);
     }
 
@@ -87,6 +90,26 @@ class FeatureContext implements Context
         $filename = $this->getPrefixedPath($filename);
         Assertion::file($filename);
         Assert::that(file_get_contents($filename))->same((string) $data);
+    }
+
+    /**
+     * @Given I dump the composer autoload
+     */
+    public function iDumpTheComposerAutoload()
+    {
+        $command = sprintf('cd %s && composer.phar dump-autoload --quiet', $this->projectDir);
+
+        exec($command, $output, $returnVal);
+
+        if (0 !== $returnVal) {
+            echo implode('', $output);
+
+            throw new \RuntimeException(sprintf(
+                'Command "%s" return errored exit code %d',
+                $command,
+                $returnVal
+            ));
+        }
     }
 
     private function getPrefixedPath($filename)

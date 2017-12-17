@@ -12,46 +12,47 @@ use Prooph\ServiceBus\Plugin\InvokeStrategy\OnEventStrategy;
 use Prooph\ServiceBus\Plugin\Router\CommandRouter;
 use Prooph\ServiceBus\Plugin\Router\EventRouter;
 use Psr\Container\ContainerInterface;
-use PhpFQCNFixer\Model\Fixer\Command\FixPath;
-use PhpFQCNFixer\Model\Fixer\Handler\FixPathHandler;
-use PhpFQCNFixer\Model\Fixer\Event\FileFixingStarted;
-use PhpFQCNFixer\Application\Listener;
-use PhpFQCNFixer\Application\FileManipulator\Basic;
+use PhpFQCNFixer\Model\File\Processor;
+use PhpFQCNFixer\Application\Command;
+use PhpFQCNFixer\Application\Handler;
+use PhpFQCNFixer\Infrastructure\File;
+use PhpFQCNFixer\Infrastructure\PhpFileLocator\SymfonyFinderLocator;
+use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver\ComposerResolver;
+use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver\Composer\Psr0NamespaceFinder;
+use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver\Composer\DefaultLoader;
+use PhpFQCNFixer\Infrastructure\File\RealpathExpander;
 
 final class ContainerBuilder
 {
     public function build(Container $container): ContainerInterface
     {
-        $this->buildFileManipulator($container);
-        $this->buildEventBus($container);
+        //$this->buildFileManipulator($container);
+        //$this->buildEventBus($container);
+        $this->buildPhpFileLocator($container);
+        $this->buildFileProcessor($container);
         $this->buildCommandBus($container);
 
         return $container;
     }
 
-    public function buildFileManipulator(Container $container)
+    private function buildPhpFileLocator(Container $container): void
     {
-        $container->set(Basic::class, new Basic());
-
+        $container->set(PhpFileLocator::class, new SymfonyFinderLocator());
     }
 
-    private function buildEventBus(Container $container): void
+    public function buildFileProcessor(Container $container): void
     {
-        $instance = new EventBus();
-        $fileManipulator = $container->get(Basic::class);
+        $resolver = new ComposerResolver();
+        $resolver->addNamespaceFinder(new Psr0NamespaceFinder(new DefaultLoader(), new RealpathExpander()));
 
-        (new EventRouter([
-            FileFixingStarted::class => [
-                new Listener\PopulateFileContent($fileManipulator),
-                new Listener\FixClassname(),
-                new Listener\FixNamespace(),
-                new Listener\OverwriteFileContent($fileManipulator),
-            ]
-        ]))->attachToMessageBus($instance);
-
-        (new OnEventStrategy())->attachToMessageBus($instance);
-
-        $container->set(EventBus::class, $instance);
+        $container->set(Processor::class, new File\LoadContentProcessor(
+            new File\FixClassnameProcessor(
+                new File\FixNamespaceProcessor(
+                    new File\DumpContentProcessor(),
+                    $resolver
+                )
+            )
+        ));
     }
 
     private function buildCommandBus(Container $container): void
@@ -59,7 +60,10 @@ final class ContainerBuilder
         $instance = new CommandBus();
 
         (new CommandRouter([
-            FixPath::class => new FixPathHandler($container->get(EventBus::class)),
+            Command\FixPath::class => new Handler\FixPathHandler(
+                $container->get(PhpFileLocator::class),
+                $container->get(Processor::class)
+            ),
         ]))->attachToMessageBus($instance);
 
         (new HandleCommandStrategy())->attachToMessageBus($instance);

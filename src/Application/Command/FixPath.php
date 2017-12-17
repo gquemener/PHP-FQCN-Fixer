@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\Model\Fixer\Command;
+namespace PhpFQCNFixer\Application\Command;
 
 use Prooph\Common\Messaging\Command;
 use Prooph\Common\Messaging\PayloadTrait;
