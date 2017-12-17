@@ -21,5 +21,7 @@ final class DefaultLoader implements ClassloaderLoader
                 }
             }
         } while ($path !== '/');
+
+        throw new \RuntimeException('Unable to locate the project vendor directory.');
     }
 }

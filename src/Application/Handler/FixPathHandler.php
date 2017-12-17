@@ -12,12 +12,12 @@ use PhpFQCNFixer\Model\File\Processor;
 final class FixPathHandler
 {
     private $locator;
+    private $fileProcessor;
 
     public function __construct(
         PhpFileLocator $locator,
         Processor $fileProcessor
-    )
-    {
+    ) {
         $this->locator = $locator;
         $this->fileProcessor = $fileProcessor;
     }
@@ -33,6 +33,6 @@ final class FixPathHandler
 
     private function fixFile(File $file): void
     {
-        $processedFile = $this->fileProcessor->process($file);
+        $this->fileProcessor->process($file);
     }
 }

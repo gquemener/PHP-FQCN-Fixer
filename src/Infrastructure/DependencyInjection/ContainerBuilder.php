@@ -21,6 +21,7 @@ use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver\ComposerResolver;
 use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver\Composer\Psr0NamespaceFinder;
 use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver\Composer\DefaultLoader;
 use PhpFQCNFixer\Infrastructure\File\RealpathExpander;
+use PhpFQCNFixer\Model\PhpFileLocator\PhpFileLocator;
 
 final class ContainerBuilder
 {
