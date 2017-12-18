@@ -26,8 +26,8 @@ Feature: Fixed inconsistent PHP class FQCN
     """
     And I dump the composer autoload
     When I run the fixer with the following arguments:
-      | command_name | fix                     |
-      | path         | src/App/Model/Truck.php |
+      | command | fix                     |
+      | path    | src/App/Model/Truck.php |
     Then file "src/App/Model/Truck.php" should contain:
     """
     <?php
@@ -62,8 +62,8 @@ Feature: Fixed inconsistent PHP class FQCN
     """
     And I dump the composer autoload
     When I run the fixer with the following arguments:
-      | command_name | fix                     |
-      | path         | src/Model/Truck.php |
+      | command | fix                 |
+      | path    | src/Model/Truck.php |
     Then file "src/Model/Truck.php" should contain:
     """
     <?php
