@@ -24,15 +24,8 @@ final class FixPathHandler
 
     public function handle(FixPath $command)
     {
-        $path = $command->path();
-
-        foreach ($this->locator->locateFiles($path) as $filename) {
-            $this->fixFile(File::locatedAt($filename));
+        foreach ($this->locator->locateFiles($command->path()) as $filename) {
+            $this->fileProcessor->process(File::locatedAt($filename));
         }
-    }
-
-    private function fixFile(File $file): void
-    {
-        $this->fileProcessor->process($file);
     }
 }

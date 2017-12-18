@@ -19,7 +19,7 @@ Feature: Fixed inconsistent PHP class FQCN
     {
         "autoload": {
             "psr-0": {
-                "PhpFQCNFixer": "src/"
+                "App\\": "src/"
             }
         }
     }
@@ -29,6 +29,42 @@ Feature: Fixed inconsistent PHP class FQCN
       | command_name | fix                     |
       | path         | src/App/Model/Truck.php |
     Then file "src/App/Model/Truck.php" should contain:
+    """
+    <?php
+
+    namespace App\Model;
+
+    class Truck
+    {
+    }
+    """
+
+  Scenario: Successfully fix inconsistent classname following psr-4
+    Given the following "src/Model/Truck.php" file:
+    """
+    <?php
+
+    namespace App;
+
+    class Motorbike
+    {
+    }
+    """
+    And the following "composer.json" file:
+    """
+    {
+        "autoload": {
+            "psr-4": {
+                "App\\": "src/"
+            }
+        }
+    }
+    """
+    And I dump the composer autoload
+    When I run the fixer with the following arguments:
+      | command_name | fix                     |
+      | path         | src/Model/Truck.php |
+    Then file "src/Model/Truck.php" should contain:
     """
     <?php
 

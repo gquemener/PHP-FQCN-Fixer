@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Prooph\ServiceBus\CommandBus;
 use PhpFQCNFixer\Application\Command\FixPath;
+use Prooph\ServiceBus\Exception\MessageDispatchException;
 
 final class FixCommand extends Command
 {
