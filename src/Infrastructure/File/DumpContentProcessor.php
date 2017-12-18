@@ -10,7 +10,11 @@ final class DumpContentProcessor implements File\Processor
 {
     public function process(File\File $file): File\File
     {
-        file_put_contents($file->path(), $file->content());
+        if ($file->dumpContent()) {
+            if (false !== file_put_contents($file->path(), $file->content())) {
+                $file->setContentDumped(true);
+            }
+        }
 
         return $file;
     }

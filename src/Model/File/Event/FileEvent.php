@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\Model\Fixer\Event;
+namespace PhpFQCNFixer\Model\File\Event;
 
 use Prooph\Common\Messaging\DomainEvent;
 use PhpFQCNFixer\Model\File\File;

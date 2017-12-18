@@ -15,4 +15,9 @@ final class FixPath extends Command
     {
         return $this->payload()['path'];
     }
+
+    public function dumpContent(): bool
+    {
+        return $this->payload()['dumpContent'];
+    }
 }

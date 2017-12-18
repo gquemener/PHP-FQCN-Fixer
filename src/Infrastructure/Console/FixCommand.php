@@ -7,10 +7,11 @@ namespace PhpFQCNFixer\Infrastructure\Console;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Prooph\ServiceBus\CommandBus;
-use PhpFQCNFixer\Application\Command\FixPath;
 use Prooph\ServiceBus\Exception\MessageDispatchException;
+use PhpFQCNFixer\Application\Command\FixPath;
 
 final class FixCommand extends Command
 {
@@ -27,7 +28,8 @@ final class FixCommand extends Command
     {
         $this
             ->setName('fix')
-            ->addArgument('path', InputArgument::REQUIRED, 'The path to analyze')
+            ->addArgument('path', InputArgument::REQUIRED, 'The path to analyze.')
+            ->addOption('dry-run', null,  InputOption::VALUE_NONE, 'Invoke file processors without dumping result to the filesystem.')
         ;
     }
 
@@ -35,6 +37,7 @@ final class FixCommand extends Command
     {
         $this->commandBus->dispatch(new FixPath([
             'path' => $input->getArgument('path'),
+            'dumpContent' => !$input->getOption('dry-run'),
         ]));
     }
 }

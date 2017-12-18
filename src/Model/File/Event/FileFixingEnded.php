@@ -2,9 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\Model\Fixer\Event;
-
-use Prooph\Common\Messaging\DomainEvent;
+namespace PhpFQCNFixer\Model\File\Event;
 
 class FileFixingEnded extends FileEvent
 {
