@@ -2,6 +2,7 @@
     "name": "gquemener/php-fqcn-fixer",
     "type": "application",
     "license": "MIT",
+    "description": "Standalone tool that ensures psr-0/psr-4 in your php classes, interfaces and traits.",
     "authors": [
         {
             "name": "Gildas Quéméner",
