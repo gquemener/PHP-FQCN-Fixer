@@ -11,6 +11,7 @@ use PhpFQCNFixer\Application\Listener\Output\StatCollector;
 final class WriteResult
 {
     private $output;
+    private $collector;
 
     public function __construct(OutputInterface $output, StatCollector $collector)
     {

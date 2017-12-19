@@ -6,20 +6,21 @@ namespace PhpFQCNFixer\Infrastructure\DependencyInjection;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Prooph\ServiceBus\CommandBus;
 use Prooph\ServiceBus\EventBus;
 use Prooph\ServiceBus\Plugin\InvokeStrategy;
 use Prooph\ServiceBus\Plugin\Router;
 use PhpFQCNFixer\Application\Command;
 use PhpFQCNFixer\Application\Handler;
-use PhpFQCNFixer\Infrastructure\File;
-use PhpFQCNFixer\Infrastructure\PhpFileLocator;
-use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver;
-use PhpFQCNFixer\Model\File\Processor;
-use PhpFQCNFixer\Model\File\Event;
 use PhpFQCNFixer\Application\Listener\Output;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use PhpFQCNFixer\Infrastructure\File;
+use PhpFQCNFixer\Infrastructure\PhpFileLocator\SymfonyFinderLocator;
+use PhpFQCNFixer\Infrastructure\PhpNamespaceResolver;
+use PhpFQCNFixer\Model\File\Event;
+use PhpFQCNFixer\Model\File\Processor;
+use PhpFQCNFixer\Model\PhpFileLocator\PhpFileLocator;
 
 final class ContainerBuilder
 {
@@ -41,7 +42,7 @@ final class ContainerBuilder
 
     private function buildPhpFileLocator(Container $container): void
     {
-        $container->set(PhpFileLocator\PhpFileLocator::class, new PhpFileLocator\SymfonyFinderLocator());
+        $container->set(PhpFileLocator::class, new SymfonyFinderLocator());
     }
 
     public function buildFileProcessor(Container $container): void
@@ -86,7 +87,7 @@ final class ContainerBuilder
 
         (new Router\CommandRouter([
             Command\FixPath::class => new Handler\FixPathHandler(
-                $container->get(PhpFileLocator\PhpFileLocator::class),
+                $container->get(PhpFileLocator::class),
                 $container->get(Processor::class),
                 $container->get(EventBus::class)
             ),

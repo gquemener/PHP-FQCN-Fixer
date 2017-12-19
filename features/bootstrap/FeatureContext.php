@@ -6,12 +6,10 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Composer\Console\Application as ComposerApplication;
 use Assert\Assertion;
 use Assert\Assert;
 use PhpFQCNFixer\Infrastructure\Console\Application;
-use PhpFQCNFixer\Infrastructure\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Container;
-use Composer\Console\Application as ComposerApplication;
 
 class FeatureContext implements Context
 {
@@ -32,9 +30,7 @@ class FeatureContext implements Context
 
         mkdir($tempFile);
         $this->projectDir = $tempFile;
-        $this->application = new Application(
-            (new ContainerBuilder())->build(new Container())
-        );
+        $this->application = new Application();
         $this->application->setAutoExit(false);
 
         $this->composerApplication = new ComposerApplication();
@@ -105,7 +101,7 @@ class FeatureContext implements Context
 
             throw new \RuntimeException(sprintf(
                 'composer dump-autoload returned errored exit code %d',
-                $returnVal
+                $exitCode
             ));
         }
     }
