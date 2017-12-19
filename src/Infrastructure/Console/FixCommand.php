@@ -29,7 +29,7 @@ final class FixCommand extends Command
         $this
             ->setName('fix')
             ->addArgument('path', InputArgument::REQUIRED, 'The path to analyze.')
-            ->addOption('dry-run', null,  InputOption::VALUE_NONE, 'Invoke file processors without dumping result to the filesystem.')
+            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Invoke file processors without dumping result to the filesystem.')
         ;
     }
 
