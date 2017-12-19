@@ -44,10 +44,12 @@ class FixCommandSpec extends ObjectBehavior
         $input->isInteractive()->willReturn(false);
         $input->hasArgument('command')->willReturn(false);
         $input->getArgument('path')->willReturn('my_file');
+        $input->getOption('dry-run')->willReturn(false);
 
         $commandBus->dispatch(Argument::allOf(
             Argument::type(FixPath::class),
-            Argument::which('path', 'my_file')
+            Argument::which('path', 'my_file'),
+            Argument::which('dumpContent', true)
         ))->shouldBeCalled();
 
         $this->run($input, $output);
