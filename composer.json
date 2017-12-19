@@ -23,6 +23,7 @@
     "require-dev": {
         "beberlei/assert": "^2.8",
         "behat/behat": "^3.4",
+        "composer/composer": "1.6.0-RC",
         "phpspec/phpspec": "^4.2"
     },
     "config": {

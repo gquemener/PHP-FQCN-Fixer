@@ -11,22 +11,14 @@ use Assert\Assert;
 use PhpFQCNFixer\Infrastructure\Console\Application;
 use PhpFQCNFixer\Infrastructure\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Container;
+use Composer\Console\Application as ComposerApplication;
 
-/**
- * Defines application features from the specific context.
- */
 class FeatureContext implements Context
 {
     private $application;
+    private $composerApplication;
     private $projectDir;
 
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
     public function __construct()
     {
         $tempFile = tempnam(sys_get_temp_dir(), '');
@@ -44,6 +36,9 @@ class FeatureContext implements Context
             (new ContainerBuilder())->build(new Container())
         );
         $this->application->setAutoExit(false);
+
+        $this->composerApplication = new ComposerApplication();
+        $this->composerApplication->setAutoExit(false);
     }
 
     /**
@@ -97,16 +92,19 @@ class FeatureContext implements Context
      */
     public function iDumpTheComposerAutoload()
     {
-        $command = sprintf('cd %s && composer.phar dump-autoload --quiet', $this->projectDir);
+        $input = new ArrayInput([
+            'command' => 'dump-autoload',
+            '--working-dir' => $this->projectDir,
+            '-vvv' => '',
+        ]);
+        $output = new BufferedOutput();
+        $exitCode = $this->composerApplication->run($input, $output);
 
-        exec($command, $output, $returnVal);
-
-        if (0 !== $returnVal) {
-            echo implode('', $output);
+        if (0 !== $exitCode) {
+            echo $output->fetch();
 
             throw new \RuntimeException(sprintf(
-                'Command "%s" return errored exit code %d',
-                $command,
+                'composer dump-autoload returned errored exit code %d',
                 $returnVal
             ));
         }
