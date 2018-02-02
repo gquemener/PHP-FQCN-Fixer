@@ -28,7 +28,8 @@ final class FixClassnameProcessor implements File\Processor
             $file->withContent(preg_replace(
                 '/class \w+/',
                 sprintf('class %s', $expectedClassName),
-                $content
+                $content,
+                1
             ))
         );
     }

@@ -28,6 +28,7 @@ class FeatureContext implements Context
             unlink($tempFile);
         }
 
+        echo "Creating temp dir $tempFile...\n";
         mkdir($tempFile);
         $this->projectDir = $tempFile;
         $this->application = new Application();
@@ -84,9 +85,9 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given I dump the composer autoload
+     * @Given I have dumped the composer autoload
      */
-    public function iDumpTheComposerAutoload()
+    public function iHaveDumpedTheComposerAutoload()
     {
         $input = new ArrayInput([
             'command' => 'dump-autoload',
