@@ -35,7 +35,7 @@ final class Psr4NamespaceFinder implements NamespaceFinder
             }
         }
 
-        return array_map(function(array $location) use ($path) {
+        return array_map(function (array $location) use ($path) {
             $namespace = str_replace(DIRECTORY_SEPARATOR, '\\', dirname(ltrim(
                 str_replace($location['directory'], '', $path),
                 DIRECTORY_SEPARATOR

@@ -32,7 +32,7 @@ final class Psr0NamespaceFinder implements NamespaceFinder
             }
         }
 
-        return array_map(function(string $location) use ($path) {
+        return array_map(function (string $location) use ($path) {
             return str_replace(DIRECTORY_SEPARATOR, '\\', dirname(ltrim(
                 str_replace($location, '', $path),
                 DIRECTORY_SEPARATOR
