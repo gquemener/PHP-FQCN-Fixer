@@ -84,9 +84,9 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given I dump the composer autoload
+     * @Given I have dumped the composer autoload
      */
-    public function iDumpTheComposerAutoload()
+    public function iHaveDumpedTheComposerAutoload()
     {
         $input = new ArrayInput([
             'command' => 'dump-autoload',

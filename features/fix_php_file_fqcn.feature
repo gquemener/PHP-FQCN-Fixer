@@ -12,6 +12,15 @@ Feature: Fixed inconsistent PHP class FQCN
 
     class Motorbike
     {
+        public function run()
+        {
+            echo 'You are starting your Motorbike with class!';
+        }
+
+        public function stop()
+        {
+            echo 'You should namespace this beauty...';
+        }
     }
     """
     And the following "composer.json" file:
@@ -24,7 +33,7 @@ Feature: Fixed inconsistent PHP class FQCN
         }
     }
     """
-    And I dump the composer autoload
+    And I have dumped the composer autoload
     When I run the fixer with the following arguments:
       | command | fix                     |
       | path    | src/App/Model/Truck.php |
@@ -36,6 +45,15 @@ Feature: Fixed inconsistent PHP class FQCN
 
     class Truck
     {
+        public function run()
+        {
+           echo 'You are starting your Motorbike with class hombre!';
+        }
+
+        public function stop()
+        {
+            echo 'You should namespace this beauty...';
+        }
     }
     """
 
@@ -48,6 +66,15 @@ Feature: Fixed inconsistent PHP class FQCN
 
     class Motorbike
     {
+        public function run()
+        {
+            echo 'You are starting your Motorbike with class!';
+        }
+
+        public function stop()
+        {
+            echo 'You should namespace this beauty...';
+        }
     }
     """
     And the following "composer.json" file:
@@ -60,7 +87,7 @@ Feature: Fixed inconsistent PHP class FQCN
         }
     }
     """
-    And I dump the composer autoload
+    And I have dumped the composer autoload
     When I run the fixer with the following arguments:
       | command | fix                 |
       | path    | src/Model/Truck.php |
@@ -72,5 +99,14 @@ Feature: Fixed inconsistent PHP class FQCN
 
     class Truck
     {
+        public function run()
+        {
+           echo 'You are starting your Motorbike with class!';
+        }
+
+        public function stop()
+        {
+            echo 'You should namespace this beauty...';
+        }
     }
     """
