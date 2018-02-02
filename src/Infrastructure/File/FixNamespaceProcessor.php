@@ -30,7 +30,8 @@ final class FixNamespaceProcessor implements File\Processor
             $file->withContent(preg_replace(
                 '/namespace .*;/',
                 sprintf('namespace %s;', $namespace),
-                $content
+                $content,
+                1
             ))
         );
     }

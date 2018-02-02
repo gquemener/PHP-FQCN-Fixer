@@ -14,7 +14,7 @@ Feature: Fixed inconsistent PHP class FQCN
     {
         public function run()
         {
-            echo 'You are starting your Motorbike with class!';
+            echo 'You are starting your class Motorbike!';
         }
 
         public function stop()
@@ -47,7 +47,7 @@ Feature: Fixed inconsistent PHP class FQCN
     {
         public function run()
         {
-           echo 'You are starting your Motorbike with class hombre!';
+            echo 'You are starting your class Motorbike!';
         }
 
         public function stop()
@@ -68,7 +68,7 @@ Feature: Fixed inconsistent PHP class FQCN
     {
         public function run()
         {
-            echo 'You are starting your Motorbike with class!';
+            echo 'You are starting your class Motorbike!';
         }
 
         public function stop()
@@ -101,7 +101,7 @@ Feature: Fixed inconsistent PHP class FQCN
     {
         public function run()
         {
-           echo 'You are starting your Motorbike with class!';
+            echo 'You are starting your class Motorbike!';
         }
 
         public function stop()

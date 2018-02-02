@@ -28,6 +28,7 @@ class FeatureContext implements Context
             unlink($tempFile);
         }
 
+        echo "Creating temp dir $tempFile...\n";
         mkdir($tempFile);
         $this->projectDir = $tempFile;
         $this->application = new Application();
