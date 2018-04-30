@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Composer\Console\Application as ComposerApplication;
 use Assert\Assertion;
 use Assert\Assert;
-use PhpFQCNFixer\Infrastructure\Console\Application;
+use PhpFQCNFixer\Console\Application;
 
 class FeatureContext implements Context
 {
@@ -28,7 +28,6 @@ class FeatureContext implements Context
             unlink($tempFile);
         }
 
-        echo "Creating temp dir $tempFile...\n";
         mkdir($tempFile);
         $this->projectDir = $tempFile;
         $this->application = new Application();

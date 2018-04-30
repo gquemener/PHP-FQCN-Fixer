@@ -15,6 +15,7 @@
         }
     },
     "require": {
+        "nikic/php-parser": "^4.0",
         "prooph/service-bus": "^6.1",
         "symfony/console": "^4.0",
         "symfony/finder": "^4.0",
