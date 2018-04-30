@@ -16,15 +16,13 @@
     },
     "require": {
         "nikic/php-parser": "^4.0",
-        "prooph/service-bus": "^6.1",
         "symfony/console": "^4.0",
-        "symfony/finder": "^4.0",
-        "symfony/stopwatch": "^4.0"
+        "symfony/finder": "^4.0"
     },
     "require-dev": {
         "beberlei/assert": "^2.8",
         "behat/behat": "^3.4",
-        "composer/composer": "1.6.0-RC",
+        "composer/composer": "^1.6",
         "phpspec/phpspec": "^4.2"
     },
     "config": {
