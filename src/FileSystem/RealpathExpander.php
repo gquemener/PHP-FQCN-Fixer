@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\FileSystem;
+namespace GildasQ\AutoloadFixer\FileSystem;
 
 final class RealpathExpander implements PathExpander
 {

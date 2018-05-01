@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\PhpNamespaceResolver\Composer;
+namespace GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer;
 
-use PhpFQCNFixer\PhpNamespaceResolver\Composer\NamespaceFinder;
-use PhpFQCNFixer\PhpNamespaceResolver\Composer\ClassloaderLoader;
-use PhpFQCNFixer\FileSystem\PathExpander;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer\NamespaceFinder;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer\ClassloaderLoader;
+use GildasQ\AutoloadFixer\FileSystem\PathExpander;
 
 final class Psr0NamespaceFinder implements NamespaceFinder
 {

@@ -2,14 +2,14 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze\PhpParser;
+namespace GildasQ\AutoloadFixer\Analyze\PhpParser;
 
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Node;
-use PhpFQCNFixer\Analyze\PhpParser\VisitorFactory;
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\Analyze\PhpParser\VisitorFactory;
+use GildasQ\AutoloadFixer\FileSystem\File;
 use PhpParser\NodeVisitor;
-use PhpFQCNFixer\PhpNamespaceResolver\PhpNamespaceResolver;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\PhpNamespaceResolver;
 use PhpParser\Node\Stmt\Class_;
 
 final class ClassnameVisitor implements VisitorFactory

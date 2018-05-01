@@ -1,31 +1,31 @@
-Feature: Fixed inconsistent PHP class FQCN
+Feature: Fixed inconsistent PHP classname
   In order to increase my productivity
   As a developper
   I need a tool which will fix PSR-0 inconsistency between my PHP Class name and the file it contains
 
-  Scenario: Successfully fix inconsistent classname following psr-0
-    Given the following "src/App/Model/Truck.php" file:
+  Scenario: Successfully fix inconsistent classname
+    Given the following "src/App/A.php" file:
     """
     <?php
 
     namespace App;
 
-    class Motorbike
+    class B
     {
-        public function run()
-        {
-            echo 'You are starting your class Motorbike!';
-        }
-
-        public function stop()
-        {
-            echo 'You should namespace this beauty...';
-        }
     }
     """
     And the following "composer.json" file:
     """
     {
+        "repositories": [
+            {
+                "type": "path",
+                "url": "/app"
+            }
+        ],
+        "require": {
+            "gildasq/autoload-fixer": "*@dev"
+        },
         "autoload": {
             "psr-0": {
                 "App\\": "src/"
@@ -33,80 +33,15 @@ Feature: Fixed inconsistent PHP class FQCN
         }
     }
     """
-    And I have dumped the composer autoload
-    When I run the fixer with the following arguments:
-      | command | fix                     |
-      | path    | src/App/Model/Truck.php |
-    Then file "src/App/Model/Truck.php" should contain:
-    """
-    <?php
-
-    namespace App\Model;
-
-    class Truck
-    {
-        public function run()
-        {
-            echo 'You are starting your class Motorbike!';
-        }
-
-        public function stop()
-        {
-            echo 'You should namespace this beauty...';
-        }
-    }
-    """
-
-  Scenario: Successfully fix inconsistent classname following psr-4
-    Given the following "src/Model/Truck.php" file:
+    And I have ran "composer install"
+    When I run "composer fix-autoload src/App/A.php"
+    Then file "src/App/A.php" should contain:
     """
     <?php
 
     namespace App;
 
-    class Motorbike
+    class A
     {
-        public function run()
-        {
-            echo 'You are starting your class Motorbike!';
-        }
-
-        public function stop()
-        {
-            echo 'You should namespace this beauty...';
-        }
-    }
-    """
-    And the following "composer.json" file:
-    """
-    {
-        "autoload": {
-            "psr-4": {
-                "App\\": "src/"
-            }
-        }
-    }
-    """
-    And I have dumped the composer autoload
-    When I run the fixer with the following arguments:
-      | command | fix                 |
-      | path    | src/Model/Truck.php |
-    Then file "src/Model/Truck.php" should contain:
-    """
-    <?php
-
-    namespace App\Model;
-
-    class Truck
-    {
-        public function run()
-        {
-            echo 'You are starting your class Motorbike!';
-        }
-
-        public function stop()
-        {
-            echo 'You should namespace this beauty...';
-        }
     }
     """

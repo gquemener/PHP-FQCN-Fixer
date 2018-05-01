@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\PhpNamespaceResolver\Composer;
+namespace GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer;
 
 use Composer\Autoload\Classloader;
 use Symfony\Component\Finder\Finder;
-use PhpFQCNFixer\PhpNamespaceResolver\Composer\ClassloaderLoader;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer\ClassloaderLoader;
 
 final class DefaultLoader implements ClassloaderLoader
 {

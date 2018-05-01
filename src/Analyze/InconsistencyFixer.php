@@ -2,9 +2,9 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze;
+namespace GildasQ\AutoloadFixer\Analyze;
 
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\FileSystem\File;
 
 interface InconsistencyFixer
 {

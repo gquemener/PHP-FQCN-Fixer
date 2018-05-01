@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\PhpNamespaceResolver;
+namespace GildasQ\AutoloadFixer\PhpNamespaceResolver;
 
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\FileSystem\File;
 
 interface PhpNamespaceResolver
 {

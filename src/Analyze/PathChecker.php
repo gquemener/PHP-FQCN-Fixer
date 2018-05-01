@@ -2,11 +2,11 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze;
+namespace GildasQ\AutoloadFixer\Analyze;
 
 use Prooph\ServiceBus\EventBus;
-use PhpFQCNFixer\FileSystem\PhpFileLocator;
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\FileSystem\PhpFileLocator;
+use GildasQ\AutoloadFixer\FileSystem\File;
 
 final class PathChecker
 {

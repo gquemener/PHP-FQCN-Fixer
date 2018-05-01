@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\PhpNamespaceResolver\Composer;
+namespace GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer;
 
 use Composer\Autoload\Classloader;
 

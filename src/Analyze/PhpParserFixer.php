@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze;
+namespace GildasQ\AutoloadFixer\Analyze;
 
 use PhpParser\Parser;
 use PhpParser\Lexer;
@@ -10,10 +10,10 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use PhpParser\PrettyPrinter;
 use PhpParser\Node;
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\FileSystem\File;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpFQCNFixer\Analyze\PhpParser\VisitorFactory;
+use GildasQ\AutoloadFixer\Analyze\PhpParser\VisitorFactory;
 
 final class PhpParserFixer implements InconsistencyFixer
 {

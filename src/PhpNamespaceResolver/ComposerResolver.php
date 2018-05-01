@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\PhpNamespaceResolver;
+namespace GildasQ\AutoloadFixer\PhpNamespaceResolver;
 
-use PhpFQCNFixer\PhpNamespaceResolver\PhpNamespaceResolver;
-use PhpFQCNFixer\PhpNamespaceResolver\Exception\NamespaceUnresolvable;
-use PhpFQCNFixer\PhpNamespaceResolver\Composer\NamespaceFinder;
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\PhpNamespaceResolver;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\Exception\NamespaceUnresolvable;
+use GildasQ\AutoloadFixer\PhpNamespaceResolver\Composer\NamespaceFinder;
+use GildasQ\AutoloadFixer\FileSystem\File;
 
 final class ComposerResolver implements PhpNamespaceResolver
 {

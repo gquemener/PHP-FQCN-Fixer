@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PhpFQCNFixer\FileSystem;
+namespace GildasQ\AutoloadFixer\FileSystem;
 
 use Symfony\Component\Finder\Finder;
 
