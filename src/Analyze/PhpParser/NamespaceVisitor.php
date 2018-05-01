@@ -6,17 +6,16 @@ namespace GildasQ\AutoloadFixer\Analyze\PhpParser;
 
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\NodeVisitor;
 use GildasQ\AutoloadFixer\Analyze\PhpParser\VisitorFactory;
 use GildasQ\AutoloadFixer\FileSystem\File;
-use PhpParser\NodeVisitor;
-use GildasQ\AutoloadFixer\PhpNamespaceResolver\PhpNamespaceResolver;
+use GildasQ\AutoloadFixer\Autoloading\NamespaceResolver;
 
 final class NamespaceVisitor implements VisitorFactory
 {
-    private $resolver;
+    private $resolvers = [];
 
-    public function addResolver(PhpNamespaceResolver $resolver): void
+    public function addResolver(NamespaceResolver $resolver): void
     {
         $this->resolvers[] = $resolver;
     }
@@ -45,7 +44,7 @@ final class NamespaceVisitor implements VisitorFactory
 
             public function leaveNode(Node $node)
             {
-                if (!$node instanceof Namespace_) {
+                if (!$node instanceof Node\Stmt\Namespace_) {
                     return;
                 }
 

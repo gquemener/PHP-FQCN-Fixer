@@ -1,10 +1,11 @@
 <?php
 
-namespace GildasQ\AutoloadFixer\PhpNamespaceResolver;
+namespace GildasQ\AutoloadFixer\Autoloading\NamespaceResolver;
 
+use GildasQ\AutoloadFixer\Autoloading\NamespaceResolver;
 use GildasQ\AutoloadFixer\FileSystem\File;
 
-final class Psr4Namespace implements PhpNamespaceResolver
+final class Psr4Namespace implements NamespaceResolver
 {
     public function supports(File $file): bool
     {

@@ -1,18 +1,17 @@
 <?php
 
-namespace spec\GildasQ\AutoloadFixer\PhpNamespaceResolver;
+namespace spec\GildasQ\AutoloadFixer\Autoloading\NamespaceResolver;
 
-use GildasQ\AutoloadFixer\PhpNamespaceResolver\Psr0Namespace;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use GildasQ\AutoloadFixer\PhpNamespaceResolver\PhpNamespaceResolver;
+use GildasQ\AutoloadFixer\Autoloading\NamespaceResolver;
 use GildasQ\AutoloadFixer\FileSystem\File;
 
 class Psr0NamespaceSpec extends ObjectBehavior
 {
     function it_is_a_php_namespace_resolver()
     {
-        $this->shouldHaveType(PhpNamespaceResolver::class);
+        $this->shouldHaveType(NamespaceResolver::class);
     }
 
     function it_supports_psr0_file(File $file)
