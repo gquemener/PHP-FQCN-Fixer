@@ -16,14 +16,23 @@ final class NamespaceVisitor implements VisitorFactory
 {
     private $resolver;
 
-    public function __construct(PhpNamespaceResolver $resolver)
+    public function addResolver(PhpNamespaceResolver $resolver): void
     {
-        $this->resolver = $resolver;
+        $this->resolvers[] = $resolver;
     }
 
     public function create(File $file): NodeVisitor
     {
-        $expected = $this->resolver->resolve($file);
+        $expected = null;
+        foreach ($this->resolvers as $resolver) {
+            if ($resolver->supports($file)) {
+                $expected = $resolver->resolve($file);
+                break;
+            }
+        }
+        if (!$expected) {
+            throw new \RuntimeException('No resolver found.');
+        }
 
         return new class($expected) extends NodeVisitorAbstract
         {

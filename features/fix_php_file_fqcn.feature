@@ -3,8 +3,8 @@ Feature: Fixed inconsistent PHP classname
   As a developper
   I need a tool which will fix PSR-0 inconsistency between my PHP Class name and the file it contains
 
-  Scenario: Successfully fix inconsistent classname
-    Given the following "src/App/A.php" file:
+  Scenario: Successfully fix inconsistent classname based on PSR-0 autoloading rules
+    Given the following "src/App/Model/A.php" file:
     """
     <?php
 
@@ -28,18 +28,19 @@ Feature: Fixed inconsistent PHP classname
         },
         "autoload": {
             "psr-0": {
-                "App\\": "src/"
+                "App\\": "src/",
+                "Lib\\": "lib/"
             }
         }
     }
     """
     And I have ran "composer install"
-    When I run "composer fix-autoload src/App/A.php"
-    Then file "src/App/A.php" should contain:
+    When I run "composer fix-autoload"
+    Then file "src/App/Model/A.php" should contain:
     """
     <?php
 
-    namespace App;
+    namespace App\Model;
 
     class A
     {

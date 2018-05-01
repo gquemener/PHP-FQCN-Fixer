@@ -8,5 +8,7 @@ use GildasQ\AutoloadFixer\FileSystem\File;
 
 interface PhpNamespaceResolver
 {
+    public function supports(File $file): bool;
+
     public function resolve(File $file): string;
 }

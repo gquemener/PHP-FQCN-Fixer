@@ -18,6 +18,12 @@ final class CommandProvider implements CommandProviderCapability
 
     public function getCommands()
     {
-        return $this->container->get('console.commands');
+        return array_map(function($command) {
+            $command->setContainer($this->container);
+
+            return $command;
+        }, [
+            new FixAutoload(),
+        ]);
     }
 }

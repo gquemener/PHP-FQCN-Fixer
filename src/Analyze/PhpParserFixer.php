@@ -50,8 +50,8 @@ final class PhpParserFixer implements InconsistencyFixer
 
         $newStmts = $traverser->traverse($oldStmts);
 
-        $newCode = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
+        $newContent = $printer->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
 
-        return $file->withContent($newCode);
+        return $file->withContent($newContent);
     }
 }
