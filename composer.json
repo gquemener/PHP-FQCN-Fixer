@@ -1,0 +1,31 @@
+{
+    "name": "gquemener/php-fqcn-fixer",
+    "type": "application",
+    "license": "MIT",
+    "description": "Standalone tool that ensures psr-0/psr-4 in your php classes, interfaces and traits.",
+    "authors": [
+        {
+            "name": "Gildas Quéméner",
+            "email": "gildas.quemener@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PhpFQCNFixer\\": "src/"
+        }
+    },
+    "require": {
+        "nikic/php-parser": "^4.0",
+        "symfony/console": "^4.0",
+        "symfony/finder": "^4.0"
+    },
+    "require-dev": {
+        "beberlei/assert": "^2.8",
+        "behat/behat": "^3.4",
+        "composer/composer": "^1.6",
+        "phpspec/phpspec": "^4.2"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

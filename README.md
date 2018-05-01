@@ -2,7 +2,7 @@
 
 ## Introduction
 
-PHP Class Corrector is a simple standalone tool that ensures naming consistency between your php classes, interfaces
+PHP FQCN Fixer is a simple standalone tool that ensures naming consistency between your php classes, interfaces
 and traits and the file location and name.
 
 It's especially usefull when performing heavy refactoring in your code base.
