@@ -2,28 +2,36 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze\PhpParser;
+namespace GildasQ\AutoloadFixer\Analyze\PhpParser;
 
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Namespace_;
-use PhpFQCNFixer\Analyze\PhpParser\VisitorFactory;
-use PhpFQCNFixer\FileSystem\File;
 use PhpParser\NodeVisitor;
-use PhpFQCNFixer\PhpNamespaceResolver\PhpNamespaceResolver;
+use GildasQ\AutoloadFixer\Analyze\PhpParser\VisitorFactory;
+use GildasQ\AutoloadFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\Autoloading\NamespaceResolver;
 
 final class NamespaceVisitor implements VisitorFactory
 {
-    private $resolver;
+    private $resolvers = [];
 
-    public function __construct(PhpNamespaceResolver $resolver)
+    public function addResolver(NamespaceResolver $resolver): void
     {
-        $this->resolver = $resolver;
+        $this->resolvers[] = $resolver;
     }
 
     public function create(File $file): NodeVisitor
     {
-        $expected = $this->resolver->resolve($file);
+        $expected = null;
+        foreach ($this->resolvers as $resolver) {
+            if ($resolver->supports($file)) {
+                $expected = $resolver->resolve($file);
+                break;
+            }
+        }
+        if (!$expected) {
+            throw new \RuntimeException('No resolver found.');
+        }
 
         return new class($expected) extends NodeVisitorAbstract
         {
@@ -36,7 +44,7 @@ final class NamespaceVisitor implements VisitorFactory
 
             public function leaveNode(Node $node)
             {
-                if (!$node instanceof Namespace_) {
+                if (!$node instanceof Node\Stmt\Namespace_) {
                     return;
                 }
 

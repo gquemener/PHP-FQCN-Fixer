@@ -2,10 +2,10 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze\PhpParser;
+namespace GildasQ\AutoloadFixer\Analyze\PhpParser;
 
 use PhpParser\NodeVisitor;
-use PhpFQCNFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\FileSystem\File;
 
 interface VisitorFactory
 {

@@ -2,21 +2,37 @@
 
 declare (strict_types = 1);
 
-namespace PhpFQCNFixer\Analyze\PhpParser;
+namespace GildasQ\AutoloadFixer\Analyze\PhpParser;
 
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Node;
-use PhpFQCNFixer\Analyze\PhpParser\VisitorFactory;
-use PhpFQCNFixer\FileSystem\File;
 use PhpParser\NodeVisitor;
-use PhpFQCNFixer\PhpNamespaceResolver\PhpNamespaceResolver;
-use PhpParser\Node\Stmt\Class_;
+use GildasQ\AutoloadFixer\Analyze\PhpParser\VisitorFactory;
+use GildasQ\AutoloadFixer\FileSystem\File;
+use GildasQ\AutoloadFixer\Autoloading\ClassnameResolver;
 
 final class ClassnameVisitor implements VisitorFactory
 {
+    private $resolvers = [];
+
+    public function addResolver(ClassnameResolver $resolver): void
+    {
+        $this->resolvers[] = $resolver;
+    }
+
     public function create(File $file): NodeVisitor
     {
-        $expected = basename($file->path(), '.php');
+        $expected = null;
+        foreach ($this->resolvers as $resolver) {
+            if ($resolver->supports($file)) {
+                $expected = $resolver->resolve($file);
+                break;
+            }
+        }
+
+        if (!$expected) {
+            throw new \RuntimeException('No resolver found.');
+        }
 
         return new class($expected) extends NodeVisitorAbstract
         {
@@ -29,7 +45,7 @@ final class ClassnameVisitor implements VisitorFactory
 
             public function leaveNode(Node $node)
             {
-                if (!$node instanceof Class_) {
+                if (!$node instanceof Node\Stmt\Class_) {
                     return;
                 }
 

@@ -6,15 +6,15 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Composer\Console\Application as ComposerApplication;
+use Composer\Console\Application;
 use Assert\Assertion;
 use Assert\Assert;
-use PhpFQCNFixer\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use GildasQ\AutoloadFixer\Composer\Plugin;
 
 class FeatureContext implements Context
 {
     private $application;
-    private $composerApplication;
     private $projectDir;
 
     public function __construct()
@@ -30,11 +30,15 @@ class FeatureContext implements Context
 
         mkdir($tempFile);
         $this->projectDir = $tempFile;
+    }
+
+    /**
+     * @BeforeStep
+     */
+    public function createComposerApplication()
+    {
         $this->application = new Application();
         $this->application->setAutoExit(false);
-
-        $this->composerApplication = new ComposerApplication();
-        $this->composerApplication->setAutoExit(false);
     }
 
     /**
@@ -51,30 +55,7 @@ class FeatureContext implements Context
     }
 
     /**
-     * @When I run the fixer with the following arguments:
-     */
-    public function iRunTheFixerWithTheFollowingArguments(TableNode $table)
-    {
-        $arguments = $table->getRowsHash();
-        if (isset($arguments['path'])) {
-            $arguments['path'] = $this->getPrefixedPath($arguments['path']);
-        }
-        $input = new ArrayInput($arguments);
-        $output = new BufferedOutput();
-
-        if (0 !== $exitCode = $this->application->run($input, $output)) {
-            echo $output->fetch();
-
-            throw new \RuntimeException(sprintf(
-                'Command "%s" return errored exit code %d',
-                implode(' ', $table->getRowsHash()),
-                $exitCode
-            ));
-        }
-    }
-
-    /**
-     * @Then file :arg1 should contain:
+     * @Then file :filename should contain:
      */
     public function fileShouldContain($filename, PyStringNode $data)
     {
@@ -84,23 +65,31 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given I have dumped the composer autoload
+     * @Given I have ran :command
+     * @When I run :command
      */
-    public function iHaveDumpedTheComposerAutoload()
+    public function iRunComposer($command)
     {
-        $input = new ArrayInput([
-            'command' => 'dump-autoload',
-            '--working-dir' => $this->projectDir,
-            '-vvv' => '',
-        ]);
+        if (0 !== strpos($command, 'composer')) {
+            throw new \InvalidArgumentException('Cannot execute non composer command');
+        }
+        $argv = array_merge(
+            explode(' ', $command),
+            [
+                sprintf('-d%s', $this->projectDir),
+                '-vvv'
+            ]
+        );
+        $input = new ArgvInput($argv);
         $output = new BufferedOutput();
-        $exitCode = $this->composerApplication->run($input, $output);
+        $exitCode = $this->application->run($input, $output);
 
         if (0 !== $exitCode) {
             echo $output->fetch();
 
             throw new \RuntimeException(sprintf(
-                'composer dump-autoload returned errored exit code %d',
+                '"%s" returned errored exit code %d',
+                $input,
                 $exitCode
             ));
         }
