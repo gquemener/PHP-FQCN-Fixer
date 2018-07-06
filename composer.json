@@ -1,5 +1,5 @@
 {
-    "name": "gildasq/autoload-fixer",
+    "name": "gquemener/composer-autoload-fixer",
     "type": "composer-plugin",
     "license": "MIT",
     "description": "Composer plugin that helps fixing autoloading inconsistencies.",
